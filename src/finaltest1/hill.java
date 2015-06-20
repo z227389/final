@@ -1,6 +1,5 @@
 package finaltest1;
 	import java.io.BufferedReader;
-   
 	import java.io.FileInputStream;
 	import java.io.IOException;
 	import java.io.InputStreamReader;
@@ -66,8 +65,7 @@ package finaltest1;
 			for (int i = 0; i < cityNum - 1; i++) {
 				distance[i][i] = 0; // 對角線為0
 				for (int j = i + 1; j < cityNum; j++) {
-					double rij = Math
-							.sqrt(((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j])
+					double rij = Math.sqrt(((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j])
 									* (y[i] - y[j])) / 10.0);
 					// 四捨五入，取整
 					int tij = (int) Math.round(rij);
@@ -88,7 +86,7 @@ package finaltest1;
 
 			random = new Random(System.currentTimeMillis());
 		}
-
+		//GA 是將參數編碼進行演化運算，而不是使用參數本身做搜尋。
 		// 初始化編碼Ghh
 		void initGroup() {
 			int i, j;
@@ -178,8 +176,8 @@ package finaltest1;
 		 */
 		public static void main(String[] args) throws IOException {
 			System.out.println("Start....");
-			hill hillClimbing = new hill(48, 200);
-			hillClimbing.init("C://data.txt");
+			hill hillClimbing = new hill(29, 500);
+			hillClimbing.init("C:/data.txt");
 			hillClimbing.solve();
 		}
 	}
