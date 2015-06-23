@@ -93,7 +93,7 @@ import java.util.Random;
 		//GA 是將參數編碼進行演化運算，而不是使用參數本身做搜尋。
 		//染色體代表的東西不一定代表解的實際狀態
 		//事實上染色體通常需要經過解碼來得到解的實際狀態，經過解碼後的才是
-		// 初始化編碼Ghh
+		// 初始化編碼
 		void initGroup() {
 			int i, j;
 			bestGh[0] = random.nextInt(65535) % cityNum;
