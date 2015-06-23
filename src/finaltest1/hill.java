@@ -29,6 +29,7 @@ import java.util.Random;
 		 *            運行代數
 		 * 
 		 **/
+		//「基因演算法」是一個解決最佳化問題工具
 		public hill(int n, int g) {
 			cityNum = n; //城市數量
 			MAX_GEN = g; //運行疊代數 
@@ -90,6 +91,8 @@ import java.util.Random;
 			random = new Random(System.currentTimeMillis());
 		}
 		//GA 是將參數編碼進行演化運算，而不是使用參數本身做搜尋。
+		//染色體代表的東西不一定代表解的實際狀態
+		//事實上染色體通常需要經過解碼來得到解的實際狀態，經過解碼後的才是
 		// 初始化編碼Ghh
 		void initGroup() {
 			int i, j;
@@ -138,7 +141,7 @@ import java.util.Random;
 					ran2 = random.nextInt(65535) % cityNum;
 				}
 
-				// 兩交換法實施鄰域操作
+				// 兩交換法實施鄰域操作   爬山演算法只尋找鄰近的城市做比較
 				temp = tempGh[ran1];
 				tempGh[ran1] = tempGh[ran2];
 				tempGh[ran2] = temp;
@@ -162,7 +165,7 @@ import java.util.Random;
 
 			System.out.println("最佳長度出現的代數："+bestT);
 			//System.out.println(bestT);
-			System.out.println("最佳長度"+bestEvaluation);
+			System.out.println("最佳長度:"+bestEvaluation);
 			//System.out.println(bestEvaluation);
 			System.out.println("最佳路徑：");
 			for (int i = 0; i < cityNum; i++) {
@@ -179,11 +182,13 @@ import java.util.Random;
 		 */
 		public static void main(String[] args) throws IOException {
 			System.out.println("Start....");
-			hill hillClimbing = new hill(10, 50); //走0~9的城市 疊代次數設定在50次
+			hill hillClimbing = new hill(30, 100); //走0~9的城市 疊代次數設定在50次
 			hillClimbing.init("C:/data.txt");
 			hillClimbing.solve();
 		}
 	}
-
+//收斂：通常會設定為
+  // 1.疊代次數到達一定次數
+  // 2.所有染色體都非常相似
 
 
