@@ -1,9 +1,9 @@
 package finaltest1;
 	import java.io.BufferedReader;
-	import java.io.FileInputStream;
-	import java.io.IOException;
-	import java.io.InputStreamReader;
-	import java.util.Random;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Random;
 
 	public class hill {
 
@@ -30,8 +30,8 @@ package finaltest1;
 		 * 
 		 **/
 		public hill(int n, int g) {
-			cityNum = n;
-			MAX_GEN = g;
+			cityNum = n; //城市數量
+			MAX_GEN = g; //運行疊代數 
 		}
 
 		// 給編譯器一條指令，告訴它對被批註的代碼元素內部的某些警告保持靜默
@@ -46,8 +46,8 @@ package finaltest1;
 			int[] x;
 			int[] y;
 			String strbuff;
-			BufferedReader data = new BufferedReader(new InputStreamReader(
-					new FileInputStream(filename)));
+			BufferedReader data = 
+					new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
 			distance = new int[cityNum][cityNum];
 			x = new int[cityNum];
 			y = new int[cityNum];
@@ -61,12 +61,15 @@ package finaltest1;
 			}
 			// 計算距離矩陣
 			// 針對具體問題，距離計算方法也不一樣，
-			// 此處用的是att48作為案例，它有48個城市，距離計算方法為偽歐氏距離，最優值為10628
+			// 此處用的是att48作為案例，它有48個城市，距離計算方法為歐氏距離，最優值為10628
+			//http://www.dcs.gla.ac.uk/~pat/af2009/tspDemo/att48.tsp
 			for (int i = 0; i < cityNum - 1; i++) {
 				distance[i][i] = 0; // 對角線為0
 				for (int j = i + 1; j < cityNum; j++) {
-					double rij = Math.sqrt(((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j])
-									* (y[i] - y[j])) / 10.0);
+					//double rij = Math.sqrt(((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j])
+									//* (y[i] - y[j])) / 10.0);
+					
+					double rij=Math.sqrt((Math.pow((x[i] - x[j]),2)+Math.pow((y[i] - y[j]), 2)/10.0));
 					// 四捨五入，取整
 					int tij = (int) Math.round(rij);
 					if (tij < rij) {
@@ -107,7 +110,7 @@ package finaltest1;
 
 		public int evaluate(int[] chr) {
 			int len = 0;
-			// 染色體，起始城市,城市1,城市2...城市n
+			// 染色體，起始城市,城市1,城市2...城市n 行走城市的先後順序
 			for (int i = 1; i < cityNum; i++) {
 				len += distance[chr[i - 1]][chr[i]];
 			}
@@ -120,7 +123,7 @@ package finaltest1;
 		public void pashan(int[] Gh, int T) {
 			int i, temp, tt = 0;
 			int ran1, ran2;
-			int e;// 評價新值
+			int e;// 評價新值(交配:利用兩組染色體組合得到新的染色體)
 			int[] tempGh = new int[cityNum];
 			bestEvaluation = evaluate(Gh);
 
@@ -157,10 +160,10 @@ package finaltest1;
 			initGroup();// 初始化編碼
 			pashan(bestGh, MAX_GEN);
 
-			System.out.println("最佳長度出現的代數：");
-			System.out.println(bestT);
-			System.out.println("最佳長度");
-			System.out.println(bestEvaluation);
+			System.out.println("最佳長度出現的代數："+bestT);
+			//System.out.println(bestT);
+			System.out.println("最佳長度"+bestEvaluation);
+			//System.out.println(bestEvaluation);
 			System.out.println("最佳路徑：");
 			for (int i = 0; i < cityNum; i++) {
 				System.out.print(bestGh[i] + ",");
@@ -176,7 +179,7 @@ package finaltest1;
 		 */
 		public static void main(String[] args) throws IOException {
 			System.out.println("Start....");
-			hill hillClimbing = new hill(29, 500);
+			hill hillClimbing = new hill(10, 50); //走0~9的城市 疊代次數設定在50次
 			hillClimbing.init("C:/data.txt");
 			hillClimbing.solve();
 		}
