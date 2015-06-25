@@ -1,3 +1,9 @@
+//Greedy Algorithm 
+//è§£æœ€ä½³åŒ–å•é¡Œçš„æ¼”ç®—æ³•, å…¶è§£é¡Œéç¨‹å¯çœ‹æˆæ˜¯ç”±ä¸€ï¦šï¤…çš„æ±ºç­–æ­¥é©Ÿæ‰€çµ„æˆ, è€Œæ¯ä¸€æ­¥é©Ÿï¨¦æœ‰ä¸€çµ„é¸æ“‡è¦é¸å®šã€‚
+//æ˜¯ä¸€ç¨®å°‹æ‰¾æœ€ä½³è§£çš„æ–¹æ³•ï¼Œå…¶å°‹æ‰¾æ–¹æ³•ç‚ºå¾æŸä¸€èµ·é»é–‹å§‹ï¼Œ
+//ä¸æ–·çš„æ”¹é€²è©²è§£ç­”ï¼Œï¼ˆå°‹æ‰¾å‘¨åœçš„æ›´ä½³è§£ï¼Œç„¶å¾Œç§»åˆ°è©²æ›´ä½³è§£ä¸Šï¼‰ï¼Œç›´åˆ°ç„¡æ³•æ”¹é€²ç‚ºæ­¢
+//Greedy methods ä¸¦ï¥§ä¿è­‰ç¸½æ˜¯å¾—åˆ°æœ€ä½³è§£ï¼Œ
+//ä¸€å€‹ Greedy method åœ¨æ¯ä¸€æ±ºç­–æ­¥é©Ÿç¸½æ˜¯é¸å®šé‚£ç›®å‰çœ‹ï¤­æœ€å¥½çš„é¸æ“‡ã€‚
 package finaltest1;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,12 +19,12 @@ public class greedy {
 	 	  String s3;  
 	 	  City[] cities = new City[29];
 	      double city[][] = new double[29][29];
-	      ArrayList<Integer> node = new ArrayList<Integer>(); //¥Î¨ÓÀx¦s¨ì©³­n¨«­ş¨Ç«°¥«	      
+	      ArrayList<Integer> node = new ArrayList<Integer>(); //ç”¨ä¾†å„²å­˜åˆ°åº•è¦èµ°å“ªäº›åŸå¸‚	      
 	        
 	      FileReader fr2=new FileReader("bayg29.txt");
 	      BufferedReader sr2=new BufferedReader(fr2);
 	        
-	      	//±N±qtxtÀÉÅª¨ìªº¸ê®Æ¦s¶icities¯x°}¤¤
+	      	//å°‡å¾txtæª”è®€åˆ°çš„è³‡æ–™å­˜é€²citiesçŸ©é™£ä¸­
 	       	for ( int i = 0; i < cities.length; i++){ 
 	            s3 = sr2.readLine();
 	            s2 = s3.split("\\s+");
@@ -28,7 +34,7 @@ public class greedy {
 	            //System.out.println(cities[i].getY());
   			}
 	       	
-	       	//±qcities¯x°}¤¤¥Îget±N§@¼Ğ¨ú¥X¡A¨Ã§Q¥Îdistance¨ç¦¡¡A±N¦U«°¥«ªºx y­È ¤¬¬Û¥­¤è¬Û¥[¶}®Ú¸¹ ±o¨ì¶ZÂ÷¡A¦A¦s¶icity¯x°}¤¤
+	       	//å¾citiesçŸ©é™£ä¸­ç”¨getå°‡ä½œæ¨™å–å‡ºï¼Œä¸¦åˆ©ç”¨distanceå‡½å¼ï¼Œå°‡å„åŸå¸‚çš„x yå€¼ äº’ç›¸å¹³æ–¹ç›¸åŠ é–‹æ ¹è™Ÿ å¾—åˆ°è·é›¢ï¼Œå†å­˜é€²cityçŸ©é™£ä¸­
 	       	for(int i =0;i < cities.length ; i++ ){
 	       		for(int j =0;j < cities.length ; j++){
 	       			if(i==j){
@@ -39,7 +45,7 @@ public class greedy {
 	       		}
 	       	}
 	       	
-	      //ÀË´ú¯x°}¬O§_¦s¤J¦U«°¥«¶¡ªº¶ZÂ÷
+	      //æª¢æ¸¬çŸ©é™£æ˜¯å¦å­˜å…¥å„åŸå¸‚é–“çš„è·é›¢
 	       	/*for(int i =0;i<29;i++){
 	       		for(int j=0;j<29;j++){
 	       			System.out.printf("%.3f   ",city[i][j]);
@@ -47,18 +53,18 @@ public class greedy {
 	       		System.out.println();
 	       	}*/
 	       	
-	       	int count = 0; //§@¬°­p¼Æ¾¹¨Ï¥Î¡A¦]¬°¦³29®y«°¥« ¦]¦¹­n§@29¦¸­pºâ
-	       	double path = 0; //path¬O¥Ø«e¨«³X«°¥«ªºÁ`¸ô®|
-	       	int current_city = 9; //ªì©l°_©lÂI¡B¤§«á·|§@¬°¨C¦¸ªº°_ÂI
-	       	int start = 0; //¨ì¹FÂI
-	       	int steps=0;//²Ä´X¦¸
-	       	double temp = 0;//¥Î¨Ó§@¬°¤ñ¸ûªº¥Ø«e¸ô®|¡A­Y¨ä¥L¸ô®|¤ñ¸û¦n«h·|´À´«±¼
+	       	int count = 0; //ä½œç‚ºè¨ˆæ•¸å™¨ä½¿ç”¨ï¼Œå› ç‚ºæœ‰29åº§åŸå¸‚ å› æ­¤è¦ä½œ29æ¬¡è¨ˆç®—
+	       	double path = 0; //pathæ˜¯ç›®å‰èµ°è¨ªåŸå¸‚çš„ç¸½è·¯å¾‘
+	       	int current_city = 9; //åˆå§‹èµ·å§‹é»ã€ä¹‹å¾Œæœƒä½œç‚ºæ¯æ¬¡çš„èµ·é»
+	       	int start = 0; //åˆ°é”é»
+	       	int steps=0;//ç¬¬å¹¾æ¬¡
+	       	double temp = 0;//ç”¨ä¾†ä½œç‚ºæ¯”è¼ƒçš„ç›®å‰è·¯å¾‘ï¼Œè‹¥å…¶ä»–è·¯å¾‘æ¯”è¼ƒå¥½å‰‡æœƒæ›¿æ›æ‰
 	       	
-	       	while( count < city.length) //­p¼Æ¾¹¦b¦¹¨Ï¥Î §@29¦¸­pºâ
+	       	while( count < city.length) //è¨ˆæ•¸å™¨åœ¨æ­¤ä½¿ç”¨ ä½œ29æ¬¡è¨ˆç®—
 			{
-				if( count == city.length-1) //§@¨ì²Ä29¦¸ ¦]¬°count¬O¥Ñ0¶}©l¡A©Ò¥H¥u·|¨ì28¦¸¡A¦]¦¹¥Îcity.length-1
+				if( count == city.length-1) //ä½œåˆ°ç¬¬29æ¬¡ å› ç‚ºcountæ˜¯ç”±0é–‹å§‹ï¼Œæ‰€ä»¥åªæœƒåˆ°28æ¬¡ï¼Œå› æ­¤ç”¨city.length-1
 				{
-					path = path + city[0][current_city]; //³Ì«á¨«¨ìªº«°¥«·|¦bcurrent_city¤º¡A©Ò¥H­nºâ±q²Ä¤@­Ó«°¥«¨ì³Ì«áµ{¦¡ªº¶ZÂ÷¡A¦b¥[¶iÁ`¸ô®|¤¤¡A¤~ºâ§¹¦¨TSP
+					path = path + city[0][current_city]; //æœ€å¾Œèµ°åˆ°çš„åŸå¸‚æœƒåœ¨current_cityå…§ï¼Œæ‰€ä»¥è¦ç®—å¾ç¬¬ä¸€å€‹åŸå¸‚åˆ°æœ€å¾Œç¨‹å¼çš„è·é›¢ï¼Œåœ¨åŠ é€²ç¸½è·¯å¾‘ä¸­ï¼Œæ‰ç®—å®ŒæˆTSP
 					
 					System.out.printf("The city%d to city10 path is: %.3f\n", current_city+1, city[0][current_city]);
 					System.out.printf("Final step:%d\n",steps+1);
@@ -67,7 +73,7 @@ public class greedy {
 				{
 					start = current_city;
 					node.add(start);
-					temp = 9999; //¥ı±N¥Ø«etemp³]¬°¬Û·í»»»·ªº¸ô®|¡A¤ñ¥¦¤pªº¸ô®|´N·|´À´«±¼¥¦
+					temp = 9999; //å…ˆå°‡ç›®å‰tempè¨­ç‚ºç›¸ç•¶é™é çš„è·¯å¾‘ï¼Œæ¯”å®ƒå°çš„è·¯å¾‘å°±æœƒæ›¿æ›æ‰å®ƒ
 				
 					for(int target = 0; target < 29; target++)
 					{
@@ -78,7 +84,7 @@ public class greedy {
 							else if(city[start][target] < temp && already_city == (node.size()-1) )
 							{
 									temp = city[start][target];	
-									current_city = target; //±N¥Ø¼Ğ¶Ç¦^µ¹start ³o¼Ë¤U¦¸´N·|±q³o­Ó«°¥«¥Xµo
+									current_city = target; //å°‡ç›®æ¨™å‚³å›çµ¦start é€™æ¨£ä¸‹æ¬¡å°±æœƒå¾é€™å€‹åŸå¸‚å‡ºç™¼
 							}
 						
 						}
@@ -96,7 +102,7 @@ public class greedy {
 	        System.out.printf("The final sum path is %.3f",path);
 	}
 	
-	//distance¨ç¦¡ ¥Î¨Ó­pºâ«°¥«¶¡ªº¶ZÂ÷
+	//distanceå‡½å¼ ç”¨ä¾†è¨ˆç®—åŸå¸‚é–“çš„è·é›¢
 	static double distance(int x1,int y1,int x2,int y2) 
 	{	double dis = 0;
 		double x,y;

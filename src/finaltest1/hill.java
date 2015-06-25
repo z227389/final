@@ -19,16 +19,7 @@ import java.util.Random;
 		public hill() {
 
 		}
-
-		/**
-		 * constructor of GA
-		 * 
-		 * @param n
-		 *            城市數量
-		 * @param g
-		 *            運行代數
-		 * 
-		 **/
+		// constructor of GA
 		//「基因演算法」是一個解決最佳化問題工具
 		public hill(int n, int g) {
 			cityNum = n; //城市數量
@@ -84,11 +75,11 @@ import java.util.Random;
 			}
 			distance[cityNum - 1][cityNum - 1] = 0;
 
-			bestGh = new int[cityNum];
+			bestGh = new int[cityNum];  //最好的路徑編碼
 			bestEvaluation = Integer.MAX_VALUE;
-			bestT = 0;
-
+			bestT = 0;  //出現代數
 			random = new Random(System.currentTimeMillis());
+		
 		}
 		//GA 是將參數編碼進行演化運算，而不是使用參數本身做搜尋。
 		//染色體代表的東西不一定代表解的實際狀態
@@ -128,7 +119,7 @@ import java.util.Random;
 			int ran1, ran2;
 			int e;// 評價新值(交配:利用兩組染色體組合得到新的染色體)
 			int[] tempGh = new int[cityNum];
-			bestEvaluation = evaluate(Gh);
+			bestEvaluation = evaluate(Gh); //路徑長度
 
 			// 爬山代數T
 			for (tt = 0; tt < T; tt++) {
@@ -149,7 +140,7 @@ import java.util.Random;
 				e = evaluate(tempGh);// 評價新值
 
 				if (e < bestEvaluation) {
-					bestT = tt;
+					bestT = tt; //最佳出現代數
 					bestEvaluation = e;
 					for (i = 0; i < cityNum; i++) {
 						Gh[i] = tempGh[i];
@@ -170,22 +161,41 @@ import java.util.Random;
 			System.out.println("最佳路徑：");
 			for (int i = 0; i < cityNum; i++) {
 				System.out.print(bestGh[i] + ",");
-				if (i % 10 == 0 && i != 0) {
+				if (i % 10== 0 && i != 0) {
 					System.out.println();
 				}
 			}
 		}
 
-		/**
-		 * @param args
-		 * @throws IOException
-		 */
 		public static void main(String[] args) throws IOException {
 			System.out.println("Start....");
-			hill hillClimbing = new hill(30, 100); //走0~9的城市 疊代次數設定在50次
-			hillClimbing.init("C:/data.txt");
+			hill hillClimbing = new hill(48, 1000); //走0~9的城市 疊代次數設定在50次
+			hillClimbing.init("data.txt");
 			hillClimbing.solve();
+	        System.out.println();
+	        
+        double startTime,endTime,totTime;
+        startTime = System.currentTimeMillis();
+        //取得目前時間   
+        //把要測試的程式放到startTime後面
+        try
+        {
+            Thread.sleep(1000);
+            //程式暫停1秒
+        }catch(InterruptedException e)
+        {
+            System.out.println(e);
+        }
+        //把要測試的程式放到endTime前面
+        endTime = System.currentTimeMillis();
+        //取得程式結束的時間
+        totTime = endTime - startTime;
+        //計算經過多久
+       System.out.println("Using Time:" + totTime/1000);
+      
+
 		}
+		
 	}
 //收斂：通常會設定為
   // 1.疊代次數到達一定次數
